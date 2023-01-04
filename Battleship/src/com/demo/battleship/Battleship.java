@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Battleship {
 
     //main method
+    //This is to create each type of ship as a different object of the class ship
+    //A field is also created for the first player called "myField"
     public static void main(String[] args) {
         System.out.println("My Battleship");
         Field myField = new Field(10, "myField");
@@ -16,6 +18,7 @@ public class Battleship {
         Ship dS = new Ship("Destroyer", 2);
         createField(myField);
 
+        //These are default values and will be changed once the player
         String cord1 = "00";
         String cord2 = "00";
 
@@ -319,6 +322,8 @@ public class Battleship {
         } return works == 0; }
 
     //Method changePlayer
+    //This method simply prints out a line to inform the user to swtich players
+    //The program waits until the enter key is pressed before moving on
     public static void changePlayer() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Press Enter and pass the move to another player");
