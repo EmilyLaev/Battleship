@@ -18,7 +18,7 @@ public class Battleship {
         Ship dS = new Ship("Destroyer", 2);
         createField(myField);
 
-        //These are default values and will be changed once the player
+        //These are default values and will be changed once the player sets the ship on the field
         String cord1 = "00";
         String cord2 = "00";
 
@@ -28,6 +28,7 @@ public class Battleship {
         placeShip(myField, cR, cord1, cord2);
         placeShip(myField, dS, cord1, cord2);
 
+        
         changePlayer();
         System.out.println("Player 2, set your ships!");
 
@@ -39,6 +40,7 @@ public class Battleship {
         Ship dS2 = new Ship("Destroyer 2", 2);
         createField(theirField);
 
+        //Placing the five ships on the second player's field
         placeShip(theirField, aC2, cord1, cord2);
         placeShip(theirField, bS2, cord1, cord2);
         placeShip(theirField, sB2, cord1, cord2);
@@ -50,6 +52,7 @@ public class Battleship {
         System.out.println("The game starts!");
 
         //playGame
+        //This is the main while loop that runs the game play until win conditions are met
         boolean playOn = true;
         while (playOn) {
             createFog(theirField);
@@ -134,8 +137,10 @@ public class Battleship {
     }
 
     //method placeShip
+    //This method calls the askShip method which asks for coordinates, then it creates a temporary field
+    //The temporaray field checks the 
     public static void placeShip(Field field1, Ship ship, String cord1, String cord2) {
-        boolean canSet = false;
+        boolean canSet = false; 
         while (!canSet) {
             askShip(ship, cord1, cord2);
             Field temp = new Field(10, "TEMP");
