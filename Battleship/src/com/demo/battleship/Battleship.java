@@ -22,16 +22,18 @@ public class Battleship {
         String cord1 = "00";
         String cord2 = "00";
 
+        //ask for and place each ship on field
         placeShip(myField, aC, cord1, cord2);
         placeShip(myField, bS, cord1, cord2);
         placeShip(myField, sB, cord1, cord2);
         placeShip(myField, cR, cord1, cord2);
         placeShip(myField, dS, cord1, cord2);
 
-        
+        //Second player repeats actions with a second created field
         changePlayer();
         System.out.println("Player 2, set your ships!");
 
+        
         Field theirField = new Field(10, "Their Field");
         Ship aC2 = new Ship("Aircraft Carrier 2", 5);
         Ship bS2 = new Ship("Battleship 2", 4);
@@ -47,12 +49,15 @@ public class Battleship {
         placeShip(theirField, cR2, cord1, cord2);
         placeShip(theirField, dS2, cord1, cord2);
 
+        //Switch back to first player
         changePlayer();
 
         System.out.println("The game starts!");
 
         //playGame
         //This is the main while loop that runs the game play until win conditions are met
+        //Players are able to fire onto other's field and program determines if a ship was hit, if ship has sunk,
+        //Loop ends when one player's ships have all sunk
         boolean playOn = true;
         while (playOn) {
             createFog(theirField);
@@ -90,7 +95,7 @@ public class Battleship {
         }
     }
 
-    //method createField
+    //This method prints out a field with all the ships shown
     public static void createField(Field mine) {
         int a = 64;
         System.out.println("  1 2 3 4 5 6 7 8 9 10");
@@ -114,7 +119,7 @@ public class Battleship {
         System.out.println();
     }
 
-    //method createFog
+    //This method prints out field with with only the hit ships displayed, (the non-hits are hidden)
     public static void createFog(Field mine) {
         int a = 64;
         System.out.println("  1 2 3 4 5 6 7 8 9 10");
@@ -138,7 +143,7 @@ public class Battleship {
 
     //method placeShip
     //This method calls the askShip method which asks for coordinates, then it creates a temporary field
-    //The temporaray field checks the 
+    //The temporaray field checks the values to ensure the spot is clear, if not user is ask for new coordinates
     public static void placeShip(Field field1, Ship ship, String cord1, String cord2) {
         boolean canSet = false; 
         while (!canSet) {
@@ -160,7 +165,9 @@ public class Battleship {
         createField(field1);
     }
 
-    //method AskShip
+    //This method asks for the coordinates of a ship (note defalut values are used for the cord1 and cord2)
+    //These coordinates are checked to ensure they fit field and don't overlap another ship, and turned into integer values 
+    //The ships object is updated to have the new coordinates and direction
     public static void askShip(Ship ship, String cord1, String cord2) {
         String str = String.format("Enter the coordinates of the %s (%d cells)", ship.getName(), ship.getSize());
         System.out.println(str);
@@ -195,7 +202,8 @@ public class Battleship {
         //System.out.println("Works For Now" + ship.dir);
     }
 
-    //method askShot
+    //This is a method that asks the user to fire a shot then checks if spot is available
+    //If not the user is asked to try again, else the coordinate is set as an integer
     public static int[] askShot(String cord) {
         System.out.println("Take a shot!");
         Scanner scan = new Scanner(System.in);
@@ -210,7 +218,7 @@ public class Battleship {
         return setCord(cord);
     }
 
-    //method checkString
+    //This is a method to check if the user entered proper coordinates by checking the value is within field size
     public static boolean checkString(String scan) {
 
         if (scan.length() == 2) {
@@ -233,7 +241,7 @@ public class Battleship {
         }
     }
 
-    //method setCord
+    //This method turns user input from string into integer form
     public static int[] setCord(String scan) {
         int let;
         int num;
@@ -248,7 +256,7 @@ public class Battleship {
         return new int[]{let, num};
     }
 
-    //method checkCor
+    //This method checks that the second coordinate is possible based on ship size
     public static boolean checkCor(Ship ship, int[] cor2) {
         if (ship.dir != 0) {
             if (ship.dir == 1) {
@@ -267,7 +275,7 @@ public class Battleship {
         }
     }
 
-    //method checkDir
+    //A method to find which direction the ship is turned
     public static int checkDir(int[] corD1, int[] corD2) {
         if (corD1[0] == corD2[0]) {
             if (corD1[1] < corD2[1]) {
@@ -286,7 +294,7 @@ public class Battleship {
         }
     }
 
-    //method didShipSink
+    //A method to compare values to see if ship sank (Did Ship Sink)
     public static void dSS(Field field, Ship ship) {
         if (!ship.sank) {
             int hp = 0;
@@ -305,17 +313,18 @@ public class Battleship {
         }
     }
 
-    //method markSpot
+    //A simple method to change the value of a spot on the field
     public static void markSpot(Field field, int[] cord, int value) {
         field.field[cord[0]][cord[1]] = field.field[cord[0]][cord[1]] + value;
     }
 
-    //method checkSpot
+    //A method to retrieve value of field at specific spot
+    //Not used in program, can just access object getter
     public static boolean checkSpot(Field field, int[] cor, int value) {
         return field.getSpot(cor) == value;
     }
 
-    //Method checkField
+    //This method checks that all values within the field are possible
     public static boolean checkField(Field field, int max) {
         int works = 0;
         for (int i = 0; i < 10; i++) {
@@ -340,7 +349,7 @@ public class Battleship {
         }
     }
 
-    //Method addShip
+    //This method sets the ship on the field by changing field values
     public static Field addShip(Field field, Ship ship) {
         int[] corD = new int[2];
         for (int i = 0; i < 2; i++) {
@@ -360,7 +369,7 @@ public class Battleship {
         return field;
     }
 
-    //method addRShip
+    //This method sets the ship on the field by changing field values
     public static Field addRShip(Field field, Ship ship) {
         int[] cord = new int[2];
         for (int i = 0; i < 2; i++) {
@@ -406,7 +415,7 @@ public class Battleship {
         return field;
     }
 
-    //method copyArray
+    //This is a method to copy an integer array
     public static int[][] copyArray(int[][] a) {
         int[][] b = new int[10][10];
         for (int i = 0; i < 10; i++) {
@@ -417,7 +426,8 @@ public class Battleship {
         return b;
     }
 
-    //method hitMiss
+    //This method compares field values and tells user if they hit or missed a ship
+    //this method was not used in final program
     public static void hitMiss(Field field, int[] cor) {
         int val = field.getSpot(cor);
         if (val == 10) {
@@ -427,7 +437,8 @@ public class Battleship {
         }
     }
 
-    //method fireShot
+    //This method asks users to fire a shot, checks coordinates, marks the field
+    //then compares field values and tells user if they hit or missed a ship
     public static void fireShot(Field field) {
         String cord = "00";
         int[] cor = {0, 0};
@@ -447,7 +458,8 @@ public class Battleship {
         }
     }
 
-    //class Ship
+    //This is the ship class.  Each ship object had a direction, name, size, an integer array for coordinates
+    //and a boolean stating if the ship has sank
     public static class Ship {
         private final String name;
         private final int size;
@@ -485,6 +497,7 @@ public class Battleship {
             }
         }
 
+        //This method resets the coordinates after the direction and first coordinate are set
         public void setAllCords() {
             int i = 1;
             this.allCords[0] = strCord;
@@ -504,7 +517,9 @@ public class Battleship {
         public int[][] getAllCords() { return allCords; }
     }
 
-    //class Field
+    //This is the class Field, it takes an integer array, a size and name
+    //The values of the array determine where the ships are placed, what is visable
+    //and if a ship is hit or not.  This is the main information storage of the game
     public static class Field {
         private int[][] field;
         private int size;
